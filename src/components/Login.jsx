@@ -22,11 +22,8 @@ export default function Login() {
       );
       if (response.status === 200) {
         const token = response.data.token;
-        // Guardar el token
         setToken(token);
-
-        // Redirigir al Home después de iniciar sesión
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       console.error(error);
@@ -50,34 +47,44 @@ export default function Login() {
 
       {/* Formulario */}
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 p-4 sm:p-8 transition-colors duration-300">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-md w-full max-w-md shadow-lg">
-          <h2 className="text-3xl font-bold text-center text-black dark:text-white mb-8">
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-md w-full max-w-md shadow-lg space-y-6">
+          <h2 className="text-3xl font-bold text-center text-black dark:text-white">
             Sign In
           </h2>
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black dark:bg-gray-700 dark:text-white dark:border-gray-600"
-              onChange={handleChange}
-              value={formData.email}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black dark:bg-gray-700 dark:text-white dark:border-gray-600"
-              onChange={handleChange}
-              value={formData.password}
-            />
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                onChange={handleChange}
+                value={formData.email}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                onChange={handleChange}
+                value={formData.password}
+              />
+            </div>
             <button
               type="submit"
               className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-all"
             >
               Sign In
             </button>
-            <p className="text-center text-black dark:text-white">
+            <p className="text-center text-sm text-black dark:text-white pt-4">
               Don't have an account?{" "}
               <Link to="/register" className="font-bold hover:underline">
                 Sign Up

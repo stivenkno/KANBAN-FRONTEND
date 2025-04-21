@@ -1,15 +1,17 @@
 import Tablero from "./Tablero.jsx";
-import { useProjects } from "../context/ProjectsContext";
-import { useColumns } from "../context/ColumnsContext";
 import Projectos from "./Projectos.jsx";
-const Main = ({ selected, textColor }) => {
-  const { projects, setprojects } = useProjects();
-  const { columns, setColumns } = useColumns();
+const Main = ({ selected, setSelected, textColor }) => {
   switch (selected) {
     case "Tablero":
       return <Tablero textColor={textColor} />;
     case "Proyectos":
-      return <Projectos textColor={textColor} />;
+      return (
+        <Projectos
+          textColor={textColor}
+          selected={selected}
+          setSelected={setSelected}
+        />
+      );
 
     default:
       return (

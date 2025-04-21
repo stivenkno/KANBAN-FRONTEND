@@ -30,7 +30,7 @@ const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   const bgColor = theme === "dark" ? "bg-[#111111]" : "bg-gray-100";
@@ -71,12 +71,7 @@ const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
               {item.label}
             </button>
           ))}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
-          >
-            {theme === "light" ? "🌙 Dark" : "☀️ Light"}
-          </button>
+
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"

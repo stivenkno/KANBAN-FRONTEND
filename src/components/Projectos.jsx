@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
 import { useProjects } from "../context/ProjectsContext";
-import { useColumns } from "../context/ColumnsContext";
 
-export default function Projectos({ textColor }) {
+export default function Projectos({ textColor, selected, setSelected }) {
   const { projects, setprojects } = useProjects();
-  const { columns, setColumns } = useColumns();
 
   console.log(projects);
 
@@ -13,6 +10,8 @@ export default function Projectos({ textColor }) {
 
     const projectId = e.target.getAttribute("id_project");
     localStorage.setItem("id_project", projectId);
+
+    setSelected("Tablero");
   };
 
   return (
