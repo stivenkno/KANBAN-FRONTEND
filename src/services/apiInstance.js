@@ -1,26 +1,24 @@
 import axios from "axios";
 
-const API_URL = "https://kanban-backend-pqc0.onrender.com/auth/login";
+// Obtener el token del localStorage
+const token = localStorage.getItem("token");
 
-const apiInstance = axios.create({
-  baseURL: API_URL,
+// Crear una instancia de Axios con el token en los headers
+export const apiInstance = axios.create({
+  baseURL: "https://kanban-backend-pqc0.onrender.com", // Cambia esto a tu URL base
   headers: {
-    "Content-Type": "application/json",
+    Authorization: token ? `Bearer ${token}` : "",
   },
 });
 
-(".default.headers.common: Para poner por default el token en todas las consultas");
-
-export function getToken() {
-  return (apiInstance.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${localStorage.getItem("token")}`);
-}
-
-getToken();
-
-export function setToken(token) {
-  apiInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-}
+export const setToken = (token) => {
+  if (token) {
+    localStorage.setItem("token", token);
+    apiInstance.defaults.headers["Authorization"] = `Bearer ${token}`;
+  } else {
+    localStorage.removeItem("token");
+    delete apiInstance.defaults.headers["Authorization"];
+  }
+};
 
 export default apiInstance;

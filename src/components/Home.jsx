@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaBars,
   FaThLarge,
@@ -11,6 +11,10 @@ import {
   FaCog,
 } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext"; // ajusta la ruta si es diferente
+import { useProjects } from "../context/ProjectsContext";
+import { useColumns } from "../context/ColumnsContext";
+import { useNavigate } from "react-router-dom";
+import apiInstance from "../services/apiInstance";
 
 const menuItems = [
   { label: "Tablero", icon: <FaThLarge /> },
@@ -24,6 +28,13 @@ const menuItems = [
 
 const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
   const { theme, toggleTheme } = useTheme();
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   const bgColor = theme === "dark" ? "bg-[#111111]" : "bg-gray-100";
   const textColor = theme === "dark" ? "text-white" : "text-black";
@@ -69,6 +80,12 @@ const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
           >
             {theme === "light" ? "🌙 Dark" : "☀️ Light"}
           </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
+          >
+            Logout
+          </button>
         </nav>
       </div>
       <div
@@ -112,6 +129,37 @@ export default function Home() {
   const [selected, setSelected] = useState("Tablero");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme } = useTheme();
+
+  const { projects, setProjects } = useProjects();
+  const { columns, setColumns } = useColumns();
+
+  console.log("Componente Home");
+  console.log("Proyectos:", projects);
+  console.log("Columnas:", columns);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await apiInstance.get("/projects/getprojects");
+        setProjects(response.data);
+      } catch (error) {
+        console.error("Error al obtener los proyectos:", error);
+      }
+    };
+
+    fetchProjects();
+
+    const fetchColumns = async () => {
+      try {
+        const response = await apiInstance.get("/columns/getcolumns");
+        setColumns(response.data);
+      } catch (error) {
+        console.error("Error al obtener los proyectos:", error);
+      }
+    };
+
+    fetchColumns();
+  }, []);
 
   const bgColor = theme === "dark" ? "bg-[#0e0e0e]" : "bg-white";
   const textColor = theme === "dark" ? "text-white" : "text-black";

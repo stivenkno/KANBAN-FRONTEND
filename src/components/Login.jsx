@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { setToken } from "../services/apiInstance";
 
 export default function Login() {
   const { theme, toggleTheme } = useTheme();
@@ -15,15 +16,16 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       const response = await axios.post(
         "https://kanban-backend-pqc0.onrender.com/auth/login",
         formData
       );
       if (response.status === 200) {
         const token = response.data.token;
-        console.log(token);
-        localStorage.setItem("token", response.data.token);
+        // Guardar el token
+        setToken(token);
+
+        // Redirigir al Home después de iniciar sesión
         navigate("/");
       }
     } catch (error) {
