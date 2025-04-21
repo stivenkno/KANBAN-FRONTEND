@@ -98,18 +98,46 @@ const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
   );
 };
 
-const Tablero = ({ textColor }) => (
-  <div className={`p-6 ${textColor}`}>
-    <h2 className="text-2xl font-bold mb-4">Tablero de proyecto</h2>
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-      {["Por hacer", "En progreso", "En revisión", "Completado"].map((col) => (
-        <div key={col} className="bg-[#1a1a1a] rounded-lg p-4 text-white">
-          <h3 className="text-lg font-semibold mb-2">{col}</h3>
-        </div>
-      ))}
+const Tablero = ({ textColor }) => {
+  const { projects, setprojects } = useProjects();
+  const { columns, setColumns } = useColumns();
+
+  console.log(projects);
+
+  return (
+    <div className={`p-6 ${textColor}`}>
+      <h2 className="text-2xl font-bold mb-4">Tablero de proyecto</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 min-h-[500px]">
+        {projects.map((project) => (
+          <div
+            key={project.id_project}
+            className="bg-[#1a1a1a] rounded-lg p-4 text-white"
+          >
+            <h3 className="text-lg font-semibold mb-2">
+              {project.title_project}
+            </h3>
+
+            <div className="grid grid-cols-1 gap-2 ">
+              {columns
+                .filter((column) => column.id_project === project.id_project)
+                .map((column) => (
+                  <div
+                    key={column.id_column}
+                    className="bg-gray-700 rounded-lg p-4 text-white"
+                  >
+                    <h4 className="text-sm font-semibold mb-2">
+                      {column.title_column}
+                    </h4>
+                    <ul className="list-disc pl-4"></ul>
+                  </div>
+                ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Main = ({ selected, textColor }) => {
   switch (selected) {
