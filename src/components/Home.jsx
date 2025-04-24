@@ -69,10 +69,10 @@ export default function Home() {
         </div>
 
         <main className="overflow-y-auto">
-          <header className="flex justify-between items-center px-9 py-4 shadow-md shadow-black/10 bg-white">
+          <header className="flex justify-between items-center px-9 py-4 shadow-md shadow-black/10 bg-white dark:bg-black transition-colors duration-300">
             <input
               type="text"
-              className="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Buscar..."
             />
             <div className="flex gap-4 justify-center items-center">

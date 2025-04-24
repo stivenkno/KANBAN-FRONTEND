@@ -19,8 +19,35 @@ export const ProjectsProvider = ({ children }) => {
     fetchProjects();
   }, []);
 
+  const createProject = async (projectData) => {
+    try {
+      const response = await apiInstance.post(
+        "/projects/createproject",
+        projectData
+      );
+      setProjects([...projects, response.data]);
+    } catch (error) {
+      console.error("Error al crear el proyecto:", error);
+    }
+  };
+
+  const deleteProject = async (projectId) => {
+    try {
+      await apiInstance.delete(`/projects/deleteproject`, {
+        data: { id_project: projectId },
+      });
+      setProjects(
+        projects.filter((project) => project.id_project !== projectId)
+      );
+    } catch (error) {
+      console.error("Error al eliminar el proyecto:", error);
+    }
+  };
+
   return (
-    <ProjectsContext.Provider value={{ projects, setProjects }}>
+    <ProjectsContext.Provider
+      value={{ projects, setProjects, createProject, deleteProject }}
+    >
       {children}
     </ProjectsContext.Provider>
   );
