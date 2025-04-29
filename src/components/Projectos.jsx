@@ -1,4 +1,5 @@
 import { useProjects } from "../context/ProjectsContext";
+import { MdDelete } from "react-icons/md";
 
 export default function Projectos({ textColor, selected, setSelected }) {
   const { projects, setprojects, createProject, deleteProject } = useProjects();
@@ -22,7 +23,7 @@ export default function Projectos({ textColor, selected, setSelected }) {
   };
 
   return (
-    <div className={`p-6 min-h-screen bg-white dark:bg-black ${textColor}`}>
+    <div className={`p-6  bg-white dark:bg-black ${textColor}`}>
       <div className="flex w-full justify-between items-center mb-8">
         <h2 className="text-3xl font-bold text-black dark:text-white">
           Proyectos
@@ -58,7 +59,7 @@ export default function Projectos({ textColor, selected, setSelected }) {
                 handleDeleteProject(project.id_project);
               }}
             >
-              X
+              <MdDelete />
             </button>
           </div>
         ))}

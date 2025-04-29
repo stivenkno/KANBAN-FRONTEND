@@ -12,6 +12,7 @@ import {
   FaUsers,
   FaCog,
 } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
 
 const menuItems = [
   { label: "Tablero", icon: <FaThLarge /> },
@@ -74,8 +75,9 @@ const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg  text-black dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600 transition-all"
           >
+            <CiLogout />
             Logout
           </button>
         </nav>

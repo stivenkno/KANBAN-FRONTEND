@@ -11,9 +11,6 @@ const Tablero = ({ textColor }) => {
   const { columns, setColumns, createColumn, deleteColumn } = useColumns();
   const { tasks, setTasks, createTask, deleteTask } = useTasks();
 
-  console.log("projects", projects);
-  console.log("columns", columns);
-
   const id_project = localStorage.getItem("id_project");
 
   const filteredColumns = columns.filter(
@@ -26,8 +23,6 @@ const Tablero = ({ textColor }) => {
     }
   });
 
-  console.log(filteredColumns);
-
   const handleCreateColumn = () => {
     const nameColumn = prompt("Ingrese el nombre de la nueva columna:");
     const columnData = {
@@ -39,7 +34,6 @@ const Tablero = ({ textColor }) => {
   };
 
   const handleDeleteColumn = (columnId) => {
-    console.log("columnId", columnId);
     setColumns(columns.filter((column) => column.id_column !== columnId));
     deleteColumn(columnId);
   };
@@ -80,7 +74,7 @@ const Tablero = ({ textColor }) => {
           <div
             id_column={column.id_column}
             key={column.id_column}
-            className="bg-[#313030] rounded-lg p-4 text-white cursor-pointer min-h-[300px] min-w-[300px]  "
+            className="column bg-[#313030] rounded-lg p-4 text-white cursor-pointer min-h-[300px] min-w-[300px]  "
           >
             <div className="w-full max-h-[50px] flex justify-between items-start ">
               <div className="flex gap-2">

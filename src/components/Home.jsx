@@ -19,10 +19,6 @@ export default function Home() {
   const { projects, setProjects } = useProjects();
   const { columns, setColumns } = useColumns();
 
-  console.log("Componente Home");
-  console.log("Proyectos:", projects);
-  console.log("Columnas:", columns);
-
   useEffect(() => {
     const fetchProjects = async () => {
       try {
