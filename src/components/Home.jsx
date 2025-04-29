@@ -53,7 +53,7 @@ export default function Home() {
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
-    <div className={`${bgColor} min-h-screen flex`}>
+    <div className={`${bgColor}  flex`}>
       <SideBar
         selected={selected}
         setSelected={setSelected}
@@ -61,7 +61,7 @@ export default function Home() {
         toggle={toggleSidebar}
       />
 
-      <div className="flex-1 ml-0">
+      <div className="flex-1 ml-0 ">
         <div className="md:hidden p-4">
           <button onClick={toggleSidebar} className={`${textColor} text-2xl`}>
             <FaBars />

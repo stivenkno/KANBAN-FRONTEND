@@ -4,6 +4,7 @@ import { useColumns } from "../context/ColumnsContext";
 import { useTasks } from "../context/TasksContext";
 import { VscAdd } from "react-icons/vsc";
 import { CiMenuKebab } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 
 const Tablero = ({ textColor }) => {
   const { projects, setprojects } = useProjects();
@@ -71,12 +72,12 @@ const Tablero = ({ textColor }) => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 min-h-[300px]">
+      <div className="flex gap-4 min-h-[calc(100vh-300px)] max-w-[calc(100vw-300px)]  overflow-x-scroll absolute ">
         {filteredColumns.map((column) => (
           <div
             id_column={column.id_column}
             key={column.id_column}
-            className="bg-[#1a1a1a] rounded-lg p-4 text-white cursor-pointer "
+            className="bg-[#313030] rounded-lg p-4 text-white cursor-pointer min-h-[300px] min-w-[300px]  "
           >
             <div className="w-full max-h-[50px] flex justify-between items-start ">
               <div className="flex gap-2">
@@ -94,29 +95,29 @@ const Tablero = ({ textColor }) => {
                   className="text-white"
                   onClick={() => handleDeleteColumn(column.id_column)}
                 >
-                  X
+                  <MdDelete className="hover:text-red-600 cursor-pointer" />
                 </p>
                 <VscAdd
-                  className="w-5 h-5"
+                  className="w-5 h-5 hover:text-green-600 cursor-pointer"
                   onClick={() => handleCreateTask(column.id_column)}
                 />
                 <CiMenuKebab className="w-5 h-5" />
               </div>
             </div>
-            <div>
+            <div className="flex flex-col gap-2 ">
               {tasks.map((task) => {
                 if (task.id_column == column.id_column) {
                   return (
                     <div
                       key={task.id_task}
-                      className="bg-white rounded-lg p-4 text-black cursor-pointer flex justify-between items-center"
+                      className="bg-[#929292] rounded-lg p-4  cursor-pointer flex justify-between items-center"
                     >
                       {task.title_task}
                       <p
-                        className="text-black"
+                        className=""
                         onClick={() => handleDeleteTask(task.id_task)}
                       >
-                        X
+                        <MdDelete className="hover:text-red-600 cursor-pointer" />
                       </p>
                     </div>
                   );

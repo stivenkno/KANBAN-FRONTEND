@@ -5,10 +5,8 @@ export default function Projectos({ textColor, selected, setSelected }) {
 
   const handleProjectClick = (e) => {
     e.preventDefault();
-
     const projectId = e.target.getAttribute("id_project");
     localStorage.setItem("id_project", projectId);
-
     setSelected("Tablero");
   };
 
@@ -24,38 +22,41 @@ export default function Projectos({ textColor, selected, setSelected }) {
   };
 
   return (
-    <div className={`p-6 ${textColor}`}>
-      <div className="flex w-full  justify-between mb-[10px]">
-        <h2 className="text-2xl font-bold ">Proyectos</h2>
-        <div
-          className="flex justify-center items-center gap-4 rounded bg-white text-black p-2 max-h-[40px] min-w-[150px] cursor-pointer"
+    <div className={`p-6 min-h-screen bg-white dark:bg-black ${textColor}`}>
+      <div className="flex w-full justify-between items-center mb-8">
+        <h2 className="text-3xl font-bold text-black dark:text-white">
+          Proyectos
+        </h2>
+
+        <button
           onClick={handleCreateProject}
+          className="flex items-center gap-2 rounded-md border border-black dark:border-white text-black dark:text-white px-4 py-2 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition duration-300  "
         >
-          <div className="text-[30px] flex justify-center items-center h-full">
-            +
-          </div>
-          <div className="h-full flex justify-center items-center">
-            Nuevo Proyecto
-          </div>
-        </div>
+          <span className="text-2xl font-bold">+</span> Nuevo Proyecto
+        </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 gap-4 min-h-[500px]">
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
         {projects.map((project) => (
           <div
             key={project.id_project}
             id_project={project.id_project}
-            className="bg-[#1a1a1a] rounded-lg p-4 text-white cursor-pointer hover:bg-gray-700 flex justify-between "
             onClick={handleProjectClick}
+            className="bg-[#313030] rounded-xl p-4 flex justify-between items-center border border-neutral-800 hover:bg-neutral-700 transition cursor-pointer"
           >
-            <h3 className="text-lg font-semibold mb-2">
+            <h3 className="text-white font-semibold truncate">
               {project.title_project}
             </h3>
-            <p
-              className="text-white"
-              onClick={() => handleDeleteProject(project.id_project)}
+
+            <button
+              className="text-gray-400 hover:text-red-500 transition"
+              onClick={(e) => {
+                e.stopPropagation(); // Evitar que también seleccione el proyecto
+                handleDeleteProject(project.id_project);
+              }}
             >
               X
-            </p>
+            </button>
           </div>
         ))}
       </div>
