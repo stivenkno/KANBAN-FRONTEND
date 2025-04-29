@@ -36,13 +36,16 @@ export default function Projectos({ textColor, selected, setSelected }) {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+        onClick={handleProjectClick}
+      >
         {projects.map((project) => (
           <div
             key={project.id_project}
             id_project={project.id_project}
-            onClick={handleProjectClick}
             className="bg-[#313030] rounded-xl p-4 flex justify-between items-center border border-neutral-800 hover:bg-neutral-700 transition cursor-pointer"
+            onClick={handleProjectClick}
           >
             <h3 className="text-white font-semibold truncate">
               {project.title_project}

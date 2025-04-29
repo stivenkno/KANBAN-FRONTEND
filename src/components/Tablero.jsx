@@ -34,11 +34,13 @@ const Tablero = ({ textColor }) => {
       title_column: nameColumn,
       id_project: id_project,
     };
+    setColumns([...columns, columnData]);
     createColumn(columnData);
   };
 
   const handleDeleteColumn = (columnId) => {
     console.log("columnId", columnId);
+    setColumns(columns.filter((column) => column.id_column !== columnId));
     deleteColumn(columnId);
   };
 
@@ -48,11 +50,12 @@ const Tablero = ({ textColor }) => {
       title_task: nameTask,
       id_column: id_columnn,
     };
-
+    setTasks([...tasks, taskData]);
     createTask(taskData);
   };
 
   const handleDeleteTask = (taskId) => {
+    setTasks(tasks.filter((task) => task.id_task !== taskId));
     deleteTask(taskId);
   };
 
