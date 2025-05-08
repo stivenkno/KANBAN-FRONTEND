@@ -8,11 +8,46 @@ import { VscAdd } from "react-icons/vsc";
 import { CiMenuKebab } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 
-export default function ColumnContainer(column, tasks) {
-  console.log("column", column);
-  console.log("tasks", tasks);
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+export default function ColumnContainer({ column }) {
+  const { columns } = useColumns();
   const { setColumns, createColumn, deleteColumn } = useColumns();
-  const { setTasks, createTask, deleteTask } = useTasks();
+  const { tasks, setTasks, createTask, deleteTask } = useTasks();
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: column.id_column,
+    data: {
+      type: "column",
+      column,
+    },
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  if (isDragging) {
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        id_column={column.id_column}
+        key={column.id_column}
+        className="opacity-50 border border-rose-500  bg-[#313030] rounded-lg p-4 text-white cursor-pointer min-h-[300px] min-w-[300px]   "
+      ></div>
+    );
+  }
+
   const handleDeleteColumn = (columnId) => {
     setColumns(columns.filter((column) => column.id_column !== columnId));
     deleteColumn(columnId);
@@ -35,12 +70,14 @@ export default function ColumnContainer(column, tasks) {
 
   return (
     <div
+      ref={setNodeRef}
+      style={style}
       id_column={column.id_column}
       key={column.id_column}
       className="column bg-[#313030] rounded-lg p-4 text-white cursor-pointer min-h-[300px] min-w-[300px]  "
     >
       <div className="w-full max-h-[50px] flex justify-between items-start ">
-        <div className="flex gap-2">
+        <div className="flex gap-2" {...attributes} {...listeners}>
           {column.title_column}
           <div className="rounded-full w-5 h-5 text-center bg-gray-600 ">
             {tasks.filter((task) => task.id_column == column.id_column).length}
