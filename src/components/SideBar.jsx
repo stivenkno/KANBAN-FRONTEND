@@ -14,6 +14,11 @@ import {
 } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 
+import { useProjects } from "../context/ProjectsContext";
+import { useColumns } from "../context/ColumnsContext";
+import { useTasks } from "../context/TasksContext";
+import { setToken } from "../services/apiInstance";
+
 const menuItems = [
   { label: "Tablero", icon: <FaThLarge /> },
   { label: "Proyectos", icon: <FaTasks /> },
@@ -25,12 +30,20 @@ const menuItems = [
 ];
 
 const Sidebar = ({ selected, setSelected, isOpen, toggle }) => {
-  const { theme, toggleTheme } = useTheme();
+  const { setColumns } = useColumns();
+  const { setProjects } = useProjects();
+  const { setTasks } = useTasks();
+  const { theme } = useTheme();
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setToken(null);
+    setProjects([]);
+    setColumns([]);
+    setTasks([]);
+
     navigate("/");
   };
 

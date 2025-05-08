@@ -4,19 +4,21 @@ import { apiInstance } from "../services/apiInstance.js";
 const ColumnsContext = createContext();
 
 export const ColumnsProvider = ({ children }) => {
-  const [columns, setColumns] = useState([]);
+  const [columns, setColumns] = useState(null);
+
+  const fetchColumns = async () => {
+    try {
+      const response = await apiInstance.get("/columns/getcolumns");
+      setColumns(response.data);
+    } catch (error) {
+      console.error("Error al obtener los proyectos:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchColumns = async () => {
-      try {
-        const response = await apiInstance.get("/columns/getcolumns");
-        setColumns(response.data);
-      } catch (error) {
-        console.error("Error al obtener los proyectos:", error);
-      }
-    };
-
-    fetchColumns();
+    if (localStorage.getItem("token")) {
+      fetchColumns(); // solo si hay token
+    }
   }, []);
 
   const createColumn = async (columnData) => {
@@ -45,7 +47,7 @@ export const ColumnsProvider = ({ children }) => {
 
   return (
     <ColumnsContext.Provider
-      value={{ columns, setColumns, createColumn, deleteColumn }}
+      value={{ columns, setColumns, fetchColumns, createColumn, deleteColumn }}
     >
       {children}
     </ColumnsContext.Provider>

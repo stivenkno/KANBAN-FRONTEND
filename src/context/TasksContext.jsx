@@ -4,19 +4,21 @@ import { apiInstance } from "../services/apiInstance.js";
 const TasksContext = createContext();
 
 export const TasksProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(null);
 
+  const fetchTasks = async () => {
+    try {
+      const response = await apiInstance.get("/tasks/gettasks");
+      console.log("accediendo al context task");
+      setTasks(response.data);
+    } catch (error) {
+      console.error("Error al obtener las tareas:", error);
+    }
+  };
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await apiInstance.get("/tasks/gettasks");
-        setTasks(response.data);
-      } catch (error) {
-        console.error("Error al obtener los proyectos:", error);
-      }
-    };
-
-    fetchTasks();
+    if (localStorage.getItem("token")) {
+      fetchTasks(); // solo si hay token
+    }
   }, []);
 
   const createTask = async (taskData) => {
@@ -40,7 +42,9 @@ export const TasksProvider = ({ children }) => {
   };
 
   return (
-    <TasksContext.Provider value={{ tasks, setTasks, createTask, deleteTask }}>
+    <TasksContext.Provider
+      value={{ tasks, setTasks, createTask, deleteTask, fetchTasks }}
+    >
       {children}
     </TasksContext.Provider>
   );

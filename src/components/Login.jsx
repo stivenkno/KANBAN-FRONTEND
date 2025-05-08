@@ -3,10 +3,17 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { setToken } from "../services/apiInstance";
+import { useProjects } from "../context/ProjectsContext";
+import { useColumns } from "../context/ColumnsContext";
+import { useTasks } from "../context/TasksContext";
 
 export default function Login() {
   const { theme, toggleTheme } = useTheme();
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const { projects, setProjects, fetchProjects } = useProjects();
+  const { columns, setColumns, fetchColumns } = useColumns();
+  const { tasks, setTasks, fetchTasks } = useTasks();
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,8 +29,12 @@ export default function Login() {
       );
       if (response.status === 200) {
         const token = response.data.token;
-        setToken(token);
-        navigate("/home");
+        if (setToken(token)) {
+          await fetchProjects();
+          await fetchColumns();
+          await fetchTasks();
+          navigate("/home");
+        }
       }
     } catch (error) {
       console.error(error);

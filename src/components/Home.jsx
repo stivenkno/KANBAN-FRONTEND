@@ -3,6 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext"; // ajusta la ruta si es diferente
 import { useProjects } from "../context/ProjectsContext";
 import { useColumns } from "../context/ColumnsContext";
+import { useTasks } from "../context/TasksContext";
 
 import apiInstance from "../services/apiInstance";
 import Main from "./Main";
@@ -12,12 +13,13 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { FaCircleUser } from "react-icons/fa6";
 
 export default function Home() {
-  const [selected, setSelected] = useState("Tablero");
+  const [selected, setSelected] = useState("Proyectos");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   const { projects, setProjects } = useProjects();
   const { columns, setColumns } = useColumns();
+  const { tasks, setTasks } = useTasks();
 
   useEffect(() => {
     const fetchProjects = async () => {

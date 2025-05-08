@@ -15,6 +15,7 @@ export const setToken = (token) => {
   if (token) {
     localStorage.setItem("token", token);
     apiInstance.defaults.headers["Authorization"] = `Bearer ${token}`;
+    return true;
   } else {
     localStorage.removeItem("token");
     delete apiInstance.defaults.headers["Authorization"];
