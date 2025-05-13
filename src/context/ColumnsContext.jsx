@@ -45,9 +45,29 @@ export const ColumnsProvider = ({ children }) => {
     }
   };
 
+  const updateColumns = async (columnsData) => {
+    try {
+      const response = await apiInstance.put(
+        "/columns/updatecolumn",
+        columnsData
+      );
+
+      console.log("Columnas actualizadas correctamente");
+    } catch (error) {
+      console.error("Error al actualizar columnas:", error);
+    }
+  };
+
   return (
     <ColumnsContext.Provider
-      value={{ columns, setColumns, fetchColumns, createColumn, deleteColumn }}
+      value={{
+        columns,
+        setColumns,
+        fetchColumns,
+        createColumn,
+        deleteColumn,
+        updateColumns,
+      }}
     >
       {children}
     </ColumnsContext.Provider>

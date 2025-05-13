@@ -17,7 +17,8 @@ import ColumnContainer from "./ColumnContainer";
 
 const Tablero = ({ textColor }) => {
   const { projects } = useProjects();
-  const { columns, setColumns, createColumn, deleteColumn } = useColumns();
+  const { columns, setColumns, createColumn, deleteColumn, updateColumns } =
+    useColumns();
   const { tasks, setTasks, createTask, deleteTask } = useTasks();
 
   const [activeColumn, setActiveColumn] = useState(null);
@@ -112,7 +113,9 @@ const Tablero = ({ textColor }) => {
     );
 
     console.log("Después del orden:");
-    console.log(reordered.map((c) => c.id_column));
+    console.log(reordered.map((c) => c));
+
+    updateColumns(reordered);
 
     // Actualizamos el array global `columns` con el nuevo orden para este proyecto
     const newColumns = [
